@@ -40,3 +40,27 @@ Podman, a container engine developed by RedHat, is one of the most prominent Doc
 *4. What is conda? How it differs from apt, yarn, and others?* conda is binary package manager with support for environments.
 
  # Problem
+ ### Conda
+
+             conda create  -n annenv
+             conda config --add channels defaults
+             conda config --add channels bioconda
+             conda config --add channels conda-forge
+  
+             conda config --set channel_priority strict
+             conda activate annenv
+             #install
+             conda install fastqc =0.11.9
+             conda install star=2.7.10b
+             conda install samtools=1.16.1
+             conda install salmon=1.9.0
+             conda install bedtools=2.30.0
+             conda install multiqc=1.13
+             conda install picard=2.27.5
+             #export my env 
+             conda env export --from-history > myannenv.yml
+             conda env export > myannenv2.yml
+             #rebuilt environment
+             conda env create --name myannev_env_2 -f   myannenv2.yml
+             
+### Docker            
