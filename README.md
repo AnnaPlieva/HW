@@ -7,13 +7,19 @@ Docker is an open platform for developing, shipping, and running applications. D
 ### The Benefits
 
 a. It is light weight because it does not require any resource pre-allocation (RAM). Whenever it needs resources it acquires them from host OS. It is of less cost. 
+
 b. Continuous integration efficiency – Docker enables you to build a container image and use that same image across every step of the deployment process 
+
 c. Docker has public container registries 
-d. It can run on physical hardware, virtual hardware and on cloud. 
+
+d. It can run on physical hardware, virtual hardware and on cloud
+
 e. It takes very less time to create.
 
 ### The Downsides
+
 a. It is difficult to manage large amount of containers 
+
 b. Docker does not provide cross-platform compatibility means if an application is designed to run in a Docker container on windows, then it cannot run on Linux Docker container
 
 *3. Explain how Docker works: what are Dockerfiles, how are containers created, and how are they run and destroyed?*
