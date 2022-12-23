@@ -67,19 +67,28 @@ SSH (Secure Shell — «безопасная оболочка») — это се
                    #bed файлы из домашки
                    wget -O PML.bed.gz 'https://www.encodeproject.org/files/ENCFF480ECN/@@download/ENCFF480ECN.bed.gz'
                    gzip -d PML.bed.gz
-                   sort -k 1,1 -k2,2n PML.bed > sort_PML.bed
+                   sort -k 1,1 -k2,2n PML.bed > sorted_PML.bed
+                   bgzip -c sorted_PML.bed >sorted_renamed_PML.bed.gz
                    
                    wget https://ftp.ensembl.org/pub/release-108/gff3/homo_sapiens/Homo_sapiens.GRCh38.108.gff3.gz
                    gzip -d ZBTB11.bed.gz
-                   sort -k 1,1 -k2,2n ZBTB11.bed > sort_ZBTB11.bed
+                   sort -k 1,1 -k2,2n ZBTB11.bed > sorted_ZBTB11.bed
+                   bgzip -c sorted_ZBTB11.bed >sorted_renamed_ZBTB11.bed.gz
                    
                    wget -O ATAC-seq.bed.gz 'https://www.encodeproject.org/files/ENCFF654BVB/@@download/ENCFF654BVB.bed.gz'
                    gzip -d ATAC-seq.bed.gz
-                   sort -k 1,1 -k2,2n ATAC-seq.bed > sort_ATAC-seq.bed
+                   sort -k 1,1 -k2,2n ATAC-seq.bed > sorted_ATAC-seq.bed
+                   bgzip -c sorted_ATAC-seq.bed >sorted_renamed_ATAC-seq.bed.gz
                    
                    wget -O MYB.bed.gz 'https://www.encodeproject.org/files/ENCFF208DZU/@@download/ENCFF208DZU.bed.gz'
                    gzip -d MYB.bed.gz
-                   sort -k 1,1 -k2,2n ATAC-seq.bed > sort_ATAC-seq.bed
+                   sort -k 1,1 -k2,2n MYB-seq.bed > sorted_MYB-seq.bed
+                   bgzip -c sorted_MYB.bed >sorted_renamed_MYB.bed.gz
+                   
+                   
+                   #нужно проиндексировать
+                   
+                   for i in *sorted_renamed.bed.gz; do tabix -p bed $i; done
                    
                    #устанавливаем геномный браузер в папку mnt/JBrowse
                    cd ../..
@@ -90,12 +99,39 @@ SSH (Secure Shell — «безопасная оболочка») — это се
                    sudo unzip jbrowse-web-v2.3.2.zip
                    sudo rm jbrowse-web-v2.3.2.zip
                    
+                   #npm install -g @jbrowse/cli 
+                   
                    #скачиваем nginx в ver/www/html
                    sudo apt install nginx
                    #изменим конфиг
                    sudo nano /etc/nginx/nginx.conf
                    #перезапуск nginx
                    sudo nginx -s reload
+                   
+                   sudo jbrowse add-assembly Homo_sapiens.GRCh38.dna.primary_assembly.fa --load copy --out /mnt/JBrowse/
+                   sudo jbrowse add-track Homo_sapiens.GRCh38.108.sorted.gff3.gz --load copy --out mnt/JBrowse
+                   ssudo jbrowse add-track MYB_sorted_renamed.bed.gz --load copy --out /mnt/JBrowse/
+                   sudo jbrowse add-track ZBTB11_sorted_renamed.bed.gz --load copy --out /mnt/JBrowse/
+                   sudo jbrowse add-track PML_sorted_renamed.bed.gz --load copy --out /mnt/JBrowse/
+                   sudo jbrowse add-track ATAC-seq_sorted_renamed.bed.gz --load copy --out /mnt/JBrowse/
+
+
+                  
+                   
+                   
+ 
+ 
+ 
+ ссылка  http://158.160.17.228/jbrowse/ работает, ураааа
+ 
+ http://158.160.17.228/jbrowse/?session=local-OOhkfF-4Z
+ 
+ 
+ 
+
+
+                   
+  
                    
 
                    
