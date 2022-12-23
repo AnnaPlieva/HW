@@ -37,9 +37,22 @@ Docker has a concept of Dockerfile that is used for building the image. A Docker
 
 Podman, a container engine developed by RedHat, is one of the most prominent Docker alternatives for building, running, and storing container images. Podman maintains compatibility with the OCI container image spec just like Docker, meaning Podman can run container images produced by Docker and vice versa. Podman’s command line interface is identical to Docker’s, including the arguments.
 
-*4. What is conda? How it differs from apt, yarn, and others?* conda is binary package manager with support for environments.
+*4. What is conda? How it differs from apt, yarn, and others?* 
+conda is binary package manager with support for environments.
+pip VS conda :
+conda is a package management tool for installing scientific and analytical computing packages, which may be written in Python or other programming languages. conda also creates a virtual environment. pip is a general purpose Python package installer. In addition, python-pip and python3-pip are in the default Ubuntu repositories. In most cases you would choose pip instead of conda if you want to install a Python package management application. To create a Python virtual environment without installing conda, you can install python-virtualenv from the Ubuntu Software Center.
 
- # Problem
+(apt and conda) the conda version is a collection of python scripts whereas the apt version is based on a C library
+
+A com-parison of apt, pip and conda can be found in Table
+
+
+![image](https://user-images.githubusercontent.com/120120242/209351975-e876a990-3d10-41c6-86ce-84192dff00bf.png)
+
+
+
+
+# Problem
  ### Conda
 
              conda create  -n annenv
@@ -57,8 +70,8 @@ Podman, a container engine developed by RedHat, is one of the most prominent Doc
              conda install bedtools=2.30.0
              conda install multiqc=1.13
              conda install picard=2.27.5
-             #export my env 
-             conda env export --from-history > myannenv.yml
+             #export my env (2 just in case )
+             conda env export --from-history > myannenv.yml 
              conda env export > myannenv2.yml
              #rebuilt environment
              conda env create --name myannev_env_2 -f   myannenv2.yml
