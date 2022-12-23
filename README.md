@@ -46,3 +46,68 @@ Apache HTTP Server
 
 [0.4] What is SSH, and for what is it typically used? Explain two ways to authenticate in an SSH server in detail.
 SSH (Secure Shell — «безопасная оболочка») — это сетевой протокол для удаленного управления операционной системой с помощью командной строки и передачи данных в зашифрованном виде.SSH позволяет безопасно передавать в незащищённой среде практически любой другой сетевой протокол. Таким образом, можно не только удалённо работать на компьютере через командную оболочку, но и передавать по шифрованному каналу звуковой поток или видео (например, с веб-камеры).
+
+
+# Problem
+                   #Загружаем аннотацию и геном
+
+                   wget https://ftp.ensembl.org/pub/release-108/gff3/homo_sapiens/Homo_sapiens.GRCh38.108.gff3.gz
+                   wget https://ftp.ensembl.org/pub/release-108/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+                   
+                   #Индексируем все 
+                   sudo apt-get install samtools
+                   gzip -d Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+                   samtools faidx Homo_sapiens.GRCh38.dna.primary_assembly.fa
+                   
+                   sudo apt-get install tabix
+                   gzip -d Homo_sapiens.GRCh38.108.gff3.gz
+                   (grep "^#" Homo_sapiens.GRCh38.108.gff3; grep -v "^#" Homo_sapiens.GRCh38.108.gff3 | sort -t"`printf '\t'`" -k1,1 -k4,4n) | bgzip > Homo_sapiens.GRCh38.108.sort.gff3.gz
+                   tabix -p gff Homo_sapiens.GRCh38.108.sort.gff3.gz
+                   
+                   #bed файлы из домашки
+                   wget -O PML.bed.gz 'https://www.encodeproject.org/files/ENCFF480ECN/@@download/ENCFF480ECN.bed.gz'
+                   gzip -d PML.bed.gz
+                   sort -k 1,1 -k2,2n PML.bed > sort_PML.bed
+                   
+                   wget https://ftp.ensembl.org/pub/release-108/gff3/homo_sapiens/Homo_sapiens.GRCh38.108.gff3.gz
+                   gzip -d ZBTB11.bed.gz
+                   sort -k 1,1 -k2,2n ZBTB11.bed > sort_ZBTB11.bed
+                   
+                   wget -O ATAC-seq.bed.gz 'https://www.encodeproject.org/files/ENCFF654BVB/@@download/ENCFF654BVB.bed.gz'
+                   gzip -d ATAC-seq.bed.gz
+                   sort -k 1,1 -k2,2n ATAC-seq.bed > sort_ATAC-seq.bed
+                   
+                   wget -O MYB.bed.gz 'https://www.encodeproject.org/files/ENCFF208DZU/@@download/ENCFF208DZU.bed.gz'
+                   gzip -d MYB.bed.gz
+                   sort -k 1,1 -k2,2n ATAC-seq.bed > sort_ATAC-seq.bed
+                   
+                   #устанавливаем геномный браузер в папку mnt/JBrowse
+                   cd ../..
+                   cd mnt/
+                   sudo mkdir JBrowse
+                   sudo wget https://github.com/GMOD/jbrowse-components/releases/download/v2.3.2/jbrowse-web-v2.3.2.zip
+                   sudo apt-get install unzip
+                   sudo unzip jbrowse-web-v2.3.2.zip
+                   sudo rm jbrowse-web-v2.3.2.zip
+                   
+                   #скачиваем nginx в ver/www/html
+                   sudo apt install nginx
+                   #изменим конфиг
+                   sudo nano /etc/nginx/nginx.conf
+                   #перезапуск nginx
+                   sudo nginx -s reload
+                   
+
+                   
+                   
+                   
+                   
+                   
+                 
+
+
+
+                   
+                   
+                   
+             
